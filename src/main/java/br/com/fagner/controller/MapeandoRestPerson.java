@@ -10,12 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/chama-rest-person")
 public class MapeandoRestPerson {
 
     @Autowired
     private MapeamentoServicoPerson servicoPerson;
+
+    @RequestMapping(method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CamposTabelaPerson> findAll() throws Exception {
+        return servicoPerson.findAll();
+    }
 
     @RequestMapping(value="/{id}", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public CamposTabelaPerson findById(@PathVariable("id") String id) throws Exception {
