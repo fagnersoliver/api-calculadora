@@ -15,6 +15,17 @@ public class MapeamentoServicoPerson {
 
     private final AtomicLong counterPrimaryKey = new AtomicLong();
 
+    public CamposTabelaPerson create(CamposTabelaPerson camposTabelaPerson){
+        return camposTabelaPerson;
+    }
+
+    public CamposTabelaPerson update(CamposTabelaPerson camposTabelaPerson){
+        return camposTabelaPerson;
+    }
+
+    public void delete(String id){
+    }
+
     public CamposTabelaPerson findById(String id){
 
         CamposTabelaPerson camposTabelaPerson = new CamposTabelaPerson();
