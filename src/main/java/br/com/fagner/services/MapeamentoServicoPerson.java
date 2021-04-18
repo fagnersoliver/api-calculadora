@@ -1,64 +1,54 @@
 package br.com.fagner.services;
 
+import br.com.fagner.exception.ResourceNotFoundException;
 import br.com.fagner.model.CamposTabelaPerson;
+import br.com.fagner.repository.ComandosSQLPersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.FormatFlagsConversionMismatchException;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 /*Essa anotação service, serve para que o spring reconheça esse serviço somente com authored sem precisar
  instânciar o objeto. */
 @Service
 public class MapeamentoServicoPerson {
 
-    private final AtomicLong counterPrimaryKey = new AtomicLong();
+    @Autowired
+    ComandosSQLPersonRepository comandosSQLPersonRepository ;
+
 
     public CamposTabelaPerson create(CamposTabelaPerson camposTabelaPerson){
-        return camposTabelaPerson;
-    }
-
-    public CamposTabelaPerson update(CamposTabelaPerson camposTabelaPerson){
-        return camposTabelaPerson;
-    }
-
-    public void delete(String id){
-    }
-
-    public CamposTabelaPerson findById(String id){
-
-        CamposTabelaPerson camposTabelaPerson = new CamposTabelaPerson();
-        camposTabelaPerson.setId(counterPrimaryKey.incrementAndGet());
-        camposTabelaPerson.setFirstName("Fagner");
-        camposTabelaPerson.setLastName("Oliveira");
-        camposTabelaPerson.setAddress("Cotia/sp");
-        camposTabelaPerson.setGender("Masculino");
-
+        comandosSQLPersonRepository.save(camposTabelaPerson);
         return camposTabelaPerson;
     }
 
     public List<CamposTabelaPerson> findAll(){
-
-        List<CamposTabelaPerson> listaCamposTabelaPerson = new ArrayList<CamposTabelaPerson>();
-
-        for (int i = 0; i < 8; i++) {
-            CamposTabelaPerson camposTabelaPerson = mockCamposTabelaPerson(i);
-            listaCamposTabelaPerson.add(camposTabelaPerson);
-        }
-
-        return listaCamposTabelaPerson;
+        return comandosSQLPersonRepository.findAll();
     }
 
-    private CamposTabelaPerson mockCamposTabelaPerson(int i ) {
-        CamposTabelaPerson camposTabelaPerson = new CamposTabelaPerson();
-        camposTabelaPerson.setId(counterPrimaryKey.incrementAndGet());
-        camposTabelaPerson.setFirstName("Person FirstName");
-        camposTabelaPerson.setLastName("Person LastName");
-        camposTabelaPerson.setAddress("Person Address" + i );
-        camposTabelaPerson.setGender("Person Gender");
-
-        return camposTabelaPerson;
+    public CamposTabelaPerson findById(Long id){
+        return comandosSQLPersonRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Sem registros para esse ID"));
     }
+
+    public CamposTabelaPerson update(CamposTabelaPerson camposTabelaPerson){
+        CamposTabelaPerson entity = comandosSQLPersonRepository.findById(camposTabelaPerson.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+        entity.setFirstName(camposTabelaPerson.getFirstName());
+        entity.setLastName(camposTabelaPerson.getLastName());
+        entity.setAddress(camposTabelaPerson.getAddress());
+        entity.setGender(camposTabelaPerson.getGender());
+        return comandosSQLPersonRepository.save(entity);
+    }
+
+    public void delete(Long id){
+        CamposTabelaPerson entity = comandosSQLPersonRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+        comandosSQLPersonRepository.delete(entity);
+
+    }
+
+
+
 
 }

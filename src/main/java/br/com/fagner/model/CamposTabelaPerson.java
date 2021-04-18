@@ -1,14 +1,26 @@
 package br.com.fagner.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
+@Entity
+@Table(name="camposTabelaPerson")
 public class CamposTabelaPerson implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "first_name", nullable = false, length = 90)
     private String FirstName;
+
+    @Column(name = "last_name", nullable = false, length = 90)
     private String LastName;
+
+    @Column(nullable = false, length = 100)
     private String Address;
+
+    @Column(nullable = false, length = 6)
     private String Gender;
 
     public long getId() {
