@@ -1,9 +1,8 @@
 package br.com.fagner.controller;
 
-import br.com.fagner.model.CamposTabelaPerson;
+import br.com.fagner.data.vo.CamposTabelaPersonVO;
 import br.com.fagner.services.MapeamentoServicoPerson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,25 +15,24 @@ public class MapeandoRestPerson {
     @Autowired
     private MapeamentoServicoPerson servicoPerson;
 
+    @GetMapping
+    public List<CamposTabelaPersonVO> findAll() throws Exception {
+        return servicoPerson.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public CamposTabelaPersonVO findById(@PathVariable("id") Long id) throws Exception {
+        return servicoPerson.findById(id);
+    }
 
     @PostMapping
-    public CamposTabelaPerson create(@RequestBody CamposTabelaPerson camposTabelaPerson) throws Exception {
+    public CamposTabelaPersonVO create(@RequestBody CamposTabelaPersonVO camposTabelaPerson) throws Exception {
         return servicoPerson.create(camposTabelaPerson);
     }
 
     @PutMapping
-    public CamposTabelaPerson update(@RequestBody CamposTabelaPerson camposTabelaPerson) throws Exception {
+    public CamposTabelaPersonVO update(@RequestBody CamposTabelaPersonVO camposTabelaPerson) throws Exception {
         return servicoPerson.update(camposTabelaPerson);
-    }
-
-    @GetMapping("/{id}")
-    public CamposTabelaPerson findById(@PathVariable("id") Long id) throws Exception {
-        return servicoPerson.findById(id);
-    }
-
-    @GetMapping
-    public List<CamposTabelaPerson> findAll() throws Exception {
-        return servicoPerson.findAll();
     }
 
     @DeleteMapping("/{id}")

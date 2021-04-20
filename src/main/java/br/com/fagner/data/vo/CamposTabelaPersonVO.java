@@ -1,26 +1,18 @@
-package br.com.fagner.model;
+package br.com.fagner.data.vo;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
-@Entity
-@Table(name="camposTabelaPerson")
-public class CamposTabelaPerson implements Serializable {
+public class CamposTabelaPersonVO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "first_name", nullable = false, length = 90)
     private String FirstName;
 
-    @Column(name = "last_name", nullable = false, length = 90)
     private String LastName;
 
-    @Column(nullable = false, length = 100)
     private String Address;
 
-    @Column(nullable = false, length = 6)
     private String Gender;
 
     public long getId() {
@@ -61,5 +53,18 @@ public class CamposTabelaPerson implements Serializable {
 
     public void setGender(String gender) {
         Gender = gender;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CamposTabelaPersonVO that = (CamposTabelaPersonVO) o;
+        return id == that.id && Objects.equals(FirstName, that.FirstName) && Objects.equals(LastName, that.LastName) && Objects.equals(Address, that.Address) && Objects.equals(Gender, that.Gender);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, FirstName, LastName, Address, Gender);
     }
 }
