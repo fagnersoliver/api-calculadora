@@ -1,8 +1,13 @@
 package br.com.fagner.data.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@JsonPropertyOrder({"id","Address","FirstName","LastName","Gender"})
 public class CamposTabelaPersonVO implements Serializable {
 
     private long id;
@@ -12,6 +17,7 @@ public class CamposTabelaPersonVO implements Serializable {
     private String LastName;
 
     private String Address;
+
 
     private String Gender;
 

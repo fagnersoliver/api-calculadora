@@ -15,22 +15,24 @@ public class MapeandoRestPerson {
     @Autowired
     private MapeamentoServicoPerson servicoPerson;
 
-    @GetMapping
+    @GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
     public List<CamposTabelaPersonVO> findAll() throws Exception {
         return servicoPerson.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
     public CamposTabelaPersonVO findById(@PathVariable("id") Long id) throws Exception {
         return servicoPerson.findById(id);
     }
 
-    @PostMapping
+    @PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" },
+                 consumes = { "application/json", "application/xml", "application/x-yaml" })
     public CamposTabelaPersonVO create(@RequestBody CamposTabelaPersonVO camposTabelaPerson) throws Exception {
         return servicoPerson.create(camposTabelaPerson);
     }
 
-    @PutMapping
+    @PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" },
+               consumes = { "application/json", "application/xml", "application/x-yaml" })
     public CamposTabelaPersonVO update(@RequestBody CamposTabelaPersonVO camposTabelaPerson) throws Exception {
         return servicoPerson.update(camposTabelaPerson);
     }
